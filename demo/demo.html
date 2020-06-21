@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+
+<head>   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <meta name="theme-color" content="#000" />
+</head>
+
+<body>
+
+    <canvas id="space"></canvas>
+    
+    <div class="logo">
+        <a href="https://codeorum.com/" class="codeorum"><img alt="codeorum" src="https://codeorum.com/images/logo.svg"></a>
+        <a href="https://zovko.pro/" class="mirko-zovko"><img alt="mirko-zovko" src="https://zovko.pro/assets/img/logo-white.svg"></a>
+    </div>
+
+
+    <div class="container">
+
+        <div class="light_saber demo">
+            <div class="glow">
+                <span></span>
+                <canvas class="waves effect1"></canvas>
+            </div>       
+            <div class="handle">
+                <img alt="light-saber" src="https://codeorum.com/images/article_images/300/20190328T135948_300.png">
+            </div>
+        </div>
+
+        <p class="click-text">click on the handle</p>
+
+
+
+        <div class="settings">
+
+            <p class="mobile-menu">
+                <span></span>
+            </p>
+            <div class="fast-effects">
+                <p class="add_effect" data-effect="smoke"><span>Smoke</span><span>1</span></p>
+                <p class="add_effect" data-effect="flame"><span>Flame</span><span>2</span></p>
+                <p class="add_effect" data-effect="thunder"><span>Thunder</span><span>3</span></p>
+                <p class="add_effect" data-effect="energy"><span>Energy</span><span>4</span></p>
+                <p class="add_effect" data-effect="pulse"><span>Pulse</span><span>5</span></p>
+                <p class="add_effect" data-effect="zig-zag"><span>ZigZag</span><span>6</span></p>
+            </div>
+
+            <p class="zsine-title">Color</p>
+            <div id="main-color"></div>
+            <div class="animation-speed">
+                <label>Speed</label>
+                <input type="text" value="1">
+            </div>
+            <p class="zsine-title">
+                <span>Waves</span>
+                <span class="zsine-add-icon">+</span>
+            </p>
+            
+            <div class="zsine-settings">
+
+            </div>
+
+            <div class="import_export">
+                <p class="import">Import</p>
+                <p class="export">Export</p>
+            </div>
+
+        </div>
+
+
+        <div class="modal hide">
+            <div class="modal-container export-container">
+                <p class="modal_close"><span>+</span></p>
+                <p class="title">Export for page import</p>
+                <textarea id="export" cols="30" rows="10"></textarea>
+                <p class="title">Export for code import</p>
+                <textarea id="export2" cols="30" rows="10"></textarea>
+            </div>
+            <div class="modal-container import-container">
+                <p class="modal_close"><span>+</span></p>
+                <p class="title">Import</p>
+                <textarea id="import" cols="30" rows="10"></textarea>
+                <p class="import_btn">Import</p>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="../lib/zsine.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/vanilla-picker.min.js"></script> 
+    <script src="js/demo-script.js"></script>
+    <script>
+
+
+
+
+
+function $$(selector, context) {
+    return (context || document).querySelector(selector);
+}
+        
+var parentMain = $$('#main-color');
+
+var  pickerFixed;
+
+
+/* Non-popup picker */
+pickerFixed = new Picker({
+    parent: parentMain,
+    popup: false,
+    alpha: true,
+    //editor: false,s
+    editorFormat: 'rgb',
+    color: '#ff0000',
+    onChange: function(color) {
+        //color.rgbaString;
+        $('.glow span').css("box-shadow", "0 -5px 16px 5px " + color.rgbaString);
+
+
+    },
+});
+pickerFixed.setColor('#ff0000', true);
+
+
+
+
+
+
+$waves = [
+    {
+        step: 1,
+        frequency: 15,	
+        amplitude: 6,	
+        amplitudeType: "lowIn-highOut",				
+        colorGradient: [
+            {offset:0, color: "rgba(0, 0, 0, 0)"},
+            {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+            {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+            {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+            {offset:1, color: "rgba(0, 0, 0, 0)"},
+        ],
+        width: 8,
+        plotLine: "y"
+    }
+]
+
+$effect1 = new ZSine({
+    width: 200,
+    height: 310,
+    selector: ".effect1",		
+    speed: 1,
+    backgroundColor: "transparent",
+    waves: $waves
+});
+
+
+drawWaves();
+function drawWaves(){
+    var wave_string = "";
+    $(".zsine-settings").empty();
+    $waves.forEach(function(wave, index) {   
+        var amplitude_type = '';
+        if(wave.amplitudeType == 'high'){ amplitude_type += '<option selected value="high">high</option>'; }else{ amplitude_type += '<option value="high">high</option>'; }
+        if(wave.amplitudeType == 'highIn'){ amplitude_type += '<option selected value="highIn">highIn</option>'; }else{ amplitude_type += '<option value="highIn">highIn</option>'; }
+        if(wave.amplitudeType == 'highOut'){ amplitude_type += '<option selected value="highOut">highOut</option>'; }else{ amplitude_type += '<option value="highOut">highOut</option>'; }
+        if(wave.amplitudeType == 'low'){ amplitude_type += '<option selected value="low">low</option>'; }else{ amplitude_type += '<option value="low">low</option>'; }
+        if(wave.amplitudeType == 'lowIn'){ amplitude_type += '<option selected value="lowIn">lowIn</option>'; }else{ amplitude_type += '<option value="lowIn">lowIn</option>'; }
+        if(wave.amplitudeType == 'lowOut'){ amplitude_type += '<option selected value="lowOut">lowOut</option>'; }else{ amplitude_type += '<option value="lowOut">lowOut</option>'; }
+        if(wave.amplitudeType == 'lowIn-highOut'){ amplitude_type += '<option selected value="lowIn-highOut">lowIn-highOut</option>'; }else{ amplitude_type += '<option value="lowIn-highOut">lowIn-highOut</option>'; }
+        if(wave.amplitudeType == 'highIn-lowOut'){ amplitude_type += '<option selected value="highIn-lowOut">highIn-lowOut</option>'; }else{ amplitude_type += '<option value="highIn-lowOut">highIn-lowOut</option>'; }
+
+        
+        wave_string += '<div class="zsine-wave zsine-'+parseInt(index+1)+'" data-id="'+index+'">' +
+                        '<p class="zsine-wave-title zsine-close">' +
+                            '<span>'+parseInt(index+1)+'. Wave</span>' +
+                            '<span class="zsine-close-icon">></span>' +
+                        '</p>' +
+                        '<p class="zsine-remove-icon"><span>+</span></p>' +
+                        '<div class="zsine-wave-settings">' +
+                            '<div class="zsine-input zsine-width">' +
+                                '<label>Width</label>' +
+                                '<input type="text" value="'+wave.width+'">' +
+                            '</div>' +
+                            '<div class="zsine-input zsine-step">' +
+                                '<label>Step</label>' +
+                                '<input type="text" value="'+wave.step+'">' +
+                            '</div>' +
+                            '<div class="zsine-input zsine-frequency">' +
+                                '<label>Frequency</label>' +
+                                '<input type="text" value="'+wave.frequency+'">' +
+                            '</div>' +
+                            '<div class="zsine-input zsine-amplitude">' +
+                                '<label>Amplitude</label>' +
+                                '<input type="text" value="'+wave.amplitude+'">' +
+                            '</div>' +
+                            '<div class="zsine-input zsine-amplitudeType">' +
+                                '<label>A. Type</label>' +
+                                '<select>' +
+                                    amplitude_type +
+                                '</select>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+    });
+    $(".zsine-settings").empty().append(wave_string);
+}
+
+function addNewWave(){
+    var default_wave = {
+        step: 1,
+        frequency: 15,	
+        amplitude: 6,	
+        amplitudeType: "lowIn-highOut",				
+        colorGradient: [
+            {offset:0, color: "rgba(0, 0, 0, 0)"},
+            {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+            {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+            {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+            {offset:1, color: "rgba(0, 0, 0, 0)"},
+        ],
+        width: 8,
+        plotLine: "y"
+    }
+    $waves.push(default_wave);
+    drawWaves();
+}
+$(".zsine-add-icon").click(function(){
+    addNewWave();
+    
+})
+
+$('body').on('click','.zsine-remove-icon', function(){
+    var wave_index = $(this).parent().attr("data-id");
+    $waves.splice(wave_index, 1);
+    drawWaves();
+})
+
+
+$('body').on('input','.zsine-width input', function(){
+    var new_val = $(this).val();
+    var wave_index = $(this).parent().parent().parent().attr("data-id");
+    $waves[wave_index].width = parseInt(new_val);
+})
+$('body').on('input','.zsine-frequency input', function(){
+    var new_val = $(this).val();
+    var wave_index = $(this).parent().parent().parent().attr("data-id");
+    $waves[wave_index].frequency = parseInt(new_val);
+})
+$('body').on('input','.zsine-amplitude input', function(){
+    var new_val = $(this).val();
+    var wave_index = $(this).parent().parent().parent().attr("data-id");
+    $waves[wave_index].amplitude = parseInt(new_val);
+})
+$('body').on('input','.zsine-step input', function(){
+    var new_val = $(this).val();
+    var wave_index = $(this).parent().parent().parent().attr("data-id");
+    if(new_val<1){
+        new_val = 1;
+    }
+    $waves[wave_index].step = parseInt(new_val);
+})
+$('body').on('change','.zsine-amplitudeType select', function(){
+    var new_val = $(this).val();
+    var wave_index = $(this).parent().parent().parent().attr("data-id");
+    $waves[wave_index].amplitudeType = new_val;
+})
+
+$('body').on('input','.animation-speed input', function(){
+    var new_val = $(this).val();
+    $effect1.changeSpeed(new_val);
+})
+
+
+
+$('body').on('click','.add_effect', function(){
+    var new_effect = $(this).attr("data-effect");
+
+    var smoke = [
+        {
+            step: 1,
+            frequency: 15,	
+            amplitude: 6,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 7,		
+            amplitudeType: "lowIn-highOut",			
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 35,	
+            amplitude: 7,		
+            amplitudeType: "lowIn-highOut",			
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.3)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        }
+        
+    ]
+    var flame = [
+        {
+            step: 1,
+            frequency: 15,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.6)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 20,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        }
+    ]
+    var thunder = [
+        {
+            step: 50,
+            frequency: 35,	
+            amplitude: 15,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 55,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 50,	
+            amplitude: 15,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 20,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        }
+    ]
+    var energy = [
+        {
+            step: 1,
+            frequency: 40,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 35,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 30,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 10,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+    var pulse = [
+        {
+            step: 6,
+            frequency: 2,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 6,
+            frequency: 2,	
+            amplitude: -10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+    var zig_zag = [
+        {
+            step: 5,
+            frequency: 2,	
+            amplitude: 7,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+    
+    
+    if(new_effect=="smoke"){
+        $waves = smoke;
+        $(".animation-speed input").val(1);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed: 1,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+
+    if(new_effect=="flame"){
+        $waves = flame;
+        $(".animation-speed input").val(3);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed: 3,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+
+    if(new_effect=="thunder"){
+        $waves = thunder;
+        $(".animation-speed input").val(12);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed: 12,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+    
+    if(new_effect=="energy"){
+        $waves = energy;
+        $(".animation-speed input").val(2);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed: 2,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+    
+    if(new_effect=="pulse"){
+        $waves = pulse;
+        $(".animation-speed input").val(0.2);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed:  0.20,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+
+    if(new_effect=="zig-zag"){
+        $waves = zig_zag;
+        $(".animation-speed input").val(0.6);
+        $effect1 = new ZSine({
+            width: 200,
+            height: 310,
+            selector: ".effect1",		
+            speed:  0.6,
+            backgroundColor: "transparent",
+            waves: $waves
+        });
+        drawWaves();
+    }
+
+
+
+})
+
+
+
+$(".import").click(function(){
+    $(".export-container").hide();
+    $(".import-container").show();
+    $(".modal").removeClass("hide");
+
+})
+$(".export").click(function(){
+    $(".export-container").show();
+    $(".import-container").hide();
+    $(".modal").removeClass("hide");
+
+    var exportString= $effect1.getSpeed()+"|";
+    var exportStringForCode = 'waves:[';
+    $waves.forEach(function(wave, index) { 
+        exportString += wave.step+";"+wave.frequency+";"+wave.amplitude+";"+wave.amplitudeType+";"+wave.width+"|";
+        exportStringForCode += '{';
+        exportStringForCode += 'step: '+wave.step+',';
+        exportStringForCode += 'frequency: '+wave.frequency+',';
+        exportStringForCode += 'amplitude: '+wave.amplitude+',';
+        exportStringForCode += 'amplitudeType: "'+wave.amplitudeType+'",';
+        exportStringForCode += 'colorGradient: [{offset:0, color: "rgba(0, 0, 0, 0)"},{offset:0.2, color: "rgba(255, 255, 255, 0.1)"},{offset:0.5, color: "rgba(255, 255, 255, 0.5)"},{offset:0.8, color: "rgba(255, 255, 255, 0.1)"},{offset:1, color: "rgba(0, 0, 0, 0)"},],';
+        exportStringForCode += 'width: '+wave.width+',';
+        exportStringForCode += 'plotLine: "y",';
+        exportStringForCode += '},';
+    })
+    exportStringForCode += ']';
+    $("#export").val(exportString);
+    $("#export2").val(exportStringForCode);
+
+    
+
+
+})
+
+$(".modal_close").click(function(){
+    $(".modal").addClass("hide");
+})
+
+$('.import_btn').click(function(){
+    var custom_wave_imported = $("#import").val();
+    var custom_wave_array = custom_wave_imported.split("|");
+    var custom_wave_speed = custom_wave_array[0];
+    var new_custome_wave = [];
+    for(var i=1; i<custom_wave_array.length-1;i++){
+        var custom_wave_parameters = custom_wave_array[i].split(';');
+        var tmp_wave = {
+            steps:  parseFloat(custom_wave_parameters[0]),
+            frequency: parseFloat(custom_wave_parameters[1]),
+            amplitude: parseFloat(custom_wave_parameters[2]),
+            amplitudeType: custom_wave_parameters[3],				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: parseFloat(custom_wave_parameters[4]),
+            plotLine: "y"
+        }
+        new_custome_wave.push(tmp_wave);
+    }
+
+    $waves = new_custome_wave;
+    $(".animation-speed input").val(custom_wave_speed);
+    $effect1 = new ZSine({
+        width: 200,
+        height: 310,
+        selector: ".effect1",		
+        speed:  parseFloat(custom_wave_speed),
+        backgroundColor: "transparent",
+        waves: $waves
+    });
+    drawWaves();
+    
+})
+
+
+    </script>
+</body>
+
+</html>

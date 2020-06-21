@@ -1,0 +1,234 @@
+body{
+    padding:0px;
+    margin:0px;
+    overflow:hidden;
+    font-family: 'Titillium Web', sans-serif;
+    color: #fff;
+    #space{
+      position:fixed;
+      z-index:-1;
+    }
+    .logo{
+      position: fixed;
+      display: flex;
+      left: 10px;
+      top: 10px;
+      flex-direction: row;
+      z-index:1000;
+      a{
+        display:block;
+        height:30px;
+        width:auto;
+        cursor:pointer;  
+        margin-right: 10px;   
+        img{
+          height:100%;
+          width:auto;
+        }
+      }
+    }
+    .playground{
+      display: flex;
+      flex-direction: row;
+      z-index:1000;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 300;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .container{
+      padding:20px;
+      display:flex;
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      top:0;
+      justify-content: center;
+      align-items:center;
+      flex-direction: column;
+    }
+    .mr{
+        margin-right: 25px;
+    }
+    .click-text{
+        font-size: 12px;
+        text-align: center;
+    }
+    .buttons_back{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      .btn{
+        margin: 0 5px 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 40px;
+        font-size: 12px;
+        text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 3px;
+        color: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        @media screen and (max-width: 500px) {
+          width: 80px;
+          height: 25px;
+          font-size: 10px;
+        }
+        &:hover{
+          background-color:rgba(255,255,255,0.1);
+          color: rgba(255,255,255,1);
+        }
+        &.active{
+          background-color:rgba(255,255,255,0.1);
+          color: rgba(255,255,255,1);
+        }
+      }
+    }
+  }
+
+
+  .light_saber{
+    height:330px;
+    width:35px;
+    position:relative;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction:column;
+    .glow{
+      width: 5px;
+      background-color: #fff;
+      height: calc(100% - 55px);
+      bottom: 60px;
+      position: absolute;
+      border-radius: 5px 5px 0 0;
+      box-shadow: 0 -1px 3px 1px #fff;
+      transition: all 0.3s ease-in-out;
+      span{
+        content:'';
+        width: 5px;
+        top: 0px;
+        bottom: 0px;
+        position: absolute;
+        border-radius: 5px 5px 0 0;
+        animation: glow_animation 1s infinite ;
+        z-index:-1;
+      }
+      &.dark{
+        background-color: #000!important;
+        box-shadow: 0 -1px 3px 2px #000000d6, 0 -1px 10px 3px #fbfbfb78;
+      }
+      .waves{
+        position: absolute;
+        margin-left: -22px;
+        transition: opacity 0.3s ease-in-out;
+        bottom: 0;
+      }
+    }
+    .handle{
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:auto;
+      cursor: pointer;
+      img{
+        width:100%;
+        height:auto;
+      }
+    }
+
+    &.close{
+        .glow{
+            height: 0px;
+            span{               
+                animation: glow_off 0.6s forwards;
+            }
+            .waves{            
+              opacity: 0;
+            }
+        }
+    }
+
+  }
+  
+  .red span{
+    box-shadow: 0 -5px 16px 5px #ff0000;
+  }
+  
+  .blue span{
+    box-shadow: 0 -5px 16px 5px #1100ff;
+  }
+  
+  .silver span{
+    box-shadow: 0 -5px 16px 5px #424242;
+  }
+  
+  .green span{
+    box-shadow: 0 -5px 16px 3px #00a20b;
+  }
+  
+  .yellow span{
+    box-shadow: 0 -5px 16px 3px #aebd23;
+  }
+  .orange span{
+    box-shadow: 0 -5px 16px 3px #fb7d00;
+  }
+  .purple span{
+    box-shadow: 0 -5px 16px 5px #8300ff;
+  }
+  .magenta span{
+    box-shadow: 0 -5px 16px 5px #c400de;
+  }
+  
+  .black{
+      background-color: #000!important;
+      box-shadow: 0 -1px 3px 1px #000!important;
+  }
+  
+  
+  
+  
+  @keyframes glow_animation {
+    0% {
+     transform: scaleX(1);
+    }
+    20% {
+     transform: scaleX(1.1);
+    }
+    30% {
+      transform: scaleX(1.2);
+    }
+    60% {
+      transform: scaleX(1.05);
+    }
+    80% {
+      transform: scaleX(1.1);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes glow_off {
+    0% {
+        transform: scaleX(1);
+    }
+    50% {
+        transform: scaleX(1);
+       }
+    100% {
+        box-shadow: 0 -3px 3px 3px #f50836!important;
+        transform: scale(0.3);
+    }
+  }
+
+
+
+

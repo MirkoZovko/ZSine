@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:400,500,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000" />
+</head>
+
+<body>
+
+    <canvas id="space"></canvas>
+    
+    <div class="logo">
+        <a href="https://codeorum.com/" class="codeorum"><img alt="codeorum" src="https://codeorum.com/images/logo.svg"></a>
+        <a href="https://zovko.pro/" class="mirko-zovko"><img alt="mirko-zovko" src="https://zovko.pro/assets/img/logo-white.svg"></a>
+    </div>
+
+    
+
+
+    <div class="container">
+
+        <div class="light_saber">
+            <div class="glow red">
+                <span></span>
+                <canvas class="waves effect1"></canvas>
+            </div>       
+            <div class="handle">
+                <img alt="light-saber" src="https://codeorum.com/images/article_images/300/20190328T135948_300.png">
+            </div>
+        </div>
+
+        <p class="click-text">click on the handle, and turn on the sound</p>
+        <div class="buttons_back">
+            <p class="btn active" effect="effect1">effect 1</p>
+            <p class="btn" effect="effect2">effect 2</p>
+            <p class="btn" effect="effect3">effect 3</p>
+            <p class="btn" effect="effect4">effect 4</p>
+            <p class="btn" effect="effect5">effect 5</p>
+            <p class="btn" effect="effect6">effect 6</p>
+            <p class="btn" effect="effect7">effect 7</p>
+            <p class="btn" effect="effect8">effect 8</p>
+            <p class="btn" effect="effect9">effect 9</p>
+            <p class="btn" effect="effect10">effect 10</p>
+            <a class="btn" href="demo.html">Playground</p>
+        </div>
+        <a href="#" class="playground">Create your own effect!!!</a>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="../lib/zsine.js"></script>
+    <script src="js/demo-script.js"></script>
+    <script>
+        var effect1 = new ZSine({
+    width: 50,
+    height: 310,
+    selector: ".effect1",		
+    speed: 1,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 1,
+            frequency: 15,	
+            amplitude: 6,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 7,		
+            amplitudeType: "lowIn-highOut",			
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 35,	
+            amplitude: 7,		
+            amplitudeType: "lowIn-highOut",			
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.3)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 8,
+            plotLine: "y"
+        }
+        
+    ]
+});
+
+var effect2 = new ZSine({
+    width: 50,
+    height: 275,
+    selector: ".effect2",		
+    speed: 12,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 50,
+            frequency: 35,	
+            amplitude: 15,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.8, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 55,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 50,	
+            amplitude: 15,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 60,
+            frequency: 20,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect3 = new ZSine({
+    width: 50,
+    height: 290,
+    selector: ".effect3",		
+    speed: 1,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 6,
+            frequency: 3,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 6,
+            frequency: 4,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect4 = new ZSine({
+    width: 50,
+    height: 300,
+    selector: ".effect4",		
+    speed: 0.8,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 11,
+            frequency: 1,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 11,
+            frequency: 2,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 12,
+            frequency: 2,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect5 = new ZSine({
+    width: 50,
+    height: 300,
+    selector: ".effect5",		
+    speed: 4,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 1,
+            frequency: 15,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.6)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 20,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 5,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.2, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 10,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect6 = new ZSine({
+    width: 50,
+    height: 290,
+    selector: ".effect6",		
+    speed: 2,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 1,
+            frequency: 10,	
+            amplitude: 10,	
+            amplitudeType: "low",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 10,	
+            amplitude: -10,	
+            amplitudeType: "low",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect7 = new ZSine({
+    width: 50,
+    height: 300,
+    selector: ".effect7",		
+    speed: 0.6,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 5,
+            frequency: 2,	
+            amplitude: 7,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+});
+   
+var effect8 = new ZSine({
+    width: 50,
+    height: 280,
+    selector: ".effect8",		
+    speed: 2,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 1,
+            frequency: 40,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 35,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 30,	
+            amplitude: 10,	
+            amplitudeType: "lowIn",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 1,
+            frequency: 25,	
+            amplitude: 10,	
+            amplitudeType: "lowIn-highOut",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect9 = new ZSine({
+    width: 50,
+    height: 290,
+    selector: ".effect9",		
+    speed: 0.20,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 6,
+            frequency: 2,	
+            amplitude: 10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        },
+        {
+            step: 6,
+            frequency: 2,	
+            amplitude: -10,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.5)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.1)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 2,
+            plotLine: "y"
+        }
+    ]
+});
+
+var effect10 = new ZSine({
+    width: 50,
+    height: 300,
+    selector: ".effect10",		
+    speed: 0.8,
+    backgroundColor: "transparent",
+    waves:[
+        {
+            step: 6,
+            frequency: 1,	
+            amplitude: 8,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.3)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        },
+        {
+            step: 111,
+            frequency: 1,	
+            amplitude: 6,	
+            amplitudeType: "",				
+            colorGradient: [
+                {offset:0, color: "rgba(0, 0, 0, 0)"},
+                {offset:0.1, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:0.5, color: "rgba(255, 255, 255, 0.3)"},
+                {offset:0.9, color: "rgba(255, 255, 255, 0.2)"},
+                {offset:1, color: "rgba(0, 0, 0, 0)"},
+            ],
+            width: 1,
+            plotLine: "y"
+        }
+    ]
+});
+
+/* ###########################################
+    Code below is only for demo purpose
+*/
+var activeEffect = ["effect1","red"];
+var allEffects = [
+    { effect:"effect1", color:"red" },
+    { effect:"effect2", color:"blue" },
+    { effect:"effect3", color:"green" },
+    { effect:"effect4", color:"yellow" },
+    { effect:"effect5", color:"orange" },
+    { effect:"effect6", color:"purple" },
+    { effect:"effect7", color:"magenta" },
+    { effect:"effect8", color:"blue" },
+    { effect:"effect9", color:"red" },
+    { effect:"effect10", color:"dark" }
+];
+    </script>
+</body>
+
+</html>
